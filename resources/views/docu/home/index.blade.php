@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    <title>Home | Unidad de Gestión Educativa Local de Urubamba</title>
+    <title>Inicio | Unidad de Gestión Educativa Local de Urubamba</title>
 </head>
 <body>
     @livewire('docu.home-index')

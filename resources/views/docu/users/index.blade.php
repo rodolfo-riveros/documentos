@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Usuarios | Unidad de Gestión Educativa Local de Urubamba</title>
 </head>
 <body>

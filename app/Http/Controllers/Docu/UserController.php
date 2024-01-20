@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Docu;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -11,21 +14,25 @@ class UserController extends Controller
     {
         return view('docu.users.index');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        if ($user) {
+            return redirect()->route('docu.users.index')->with('success', 'Usuario registrado exitosamente.');
+        } else {
+            return redirect()->back()->withErrors('No se pudo  registrar el Usuario:'. $user->getMessage());
+        }
     }
 
     /**
@@ -52,11 +59,9 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        User::find($id)->delete();
+        return redirect()->route('docu.users.index')->with('success', 'El registro fue eliminada correctamente.');
     }
 }
